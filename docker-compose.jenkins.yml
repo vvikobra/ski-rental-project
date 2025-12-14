@@ -12,6 +12,7 @@ services:
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
     networks:
       - microservices-net
+    command: sh -c "apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/* && /sbin/tini -- /usr/local/bin/jenkins.sh"
 
 networks:
   microservices-net:
