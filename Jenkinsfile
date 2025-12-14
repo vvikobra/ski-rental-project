@@ -22,7 +22,7 @@ pipeline {
         }
         
         stage('Build Services') {
-            parallel {
+            steps {
                 stage('Build Ski Rental') {
                     steps {
                         echo 'Сборка ski-rental...'
