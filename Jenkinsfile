@@ -27,7 +27,7 @@ pipeline {
                     steps {
                         echo 'Сборка ski-rental...'
                         dir('ski-rental') {
-                            sh './mvnw clean package -DskipTests'
+                            sh './mvnw clean install -DskipTests'
                         }
                     }
                 }
@@ -35,7 +35,7 @@ pipeline {
                     steps {
                         echo 'Сборка analytics-service...'
                         dir('analytics-service') {
-                            sh './mvnw clean package -DskipTests'
+                            sh './mvnw clean install -DskipTests'
                         }
                     }
                 }
@@ -43,7 +43,7 @@ pipeline {
                     steps {
                         echo 'Сборка notification-service...'
                         dir('notification-service') {
-                            sh './mvnw clean package -DskipTests'
+                            sh './mvnw clean install -DskipTests'
                         }
                     }
                 }
@@ -51,7 +51,7 @@ pipeline {
                     steps {
                         echo 'Сборка payment-service...'
                         dir('payment-service') {
-                            sh './mvnw clean package -DskipTests'
+                            sh './mvnw clean install -DskipTests'
                         }
                     }
                 }
