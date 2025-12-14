@@ -13,10 +13,10 @@ pipeline {
             steps {
                 echo 'Сборка зависимостей (ski-rental-events-contract, ski-rental-contracts)...'
                 dir('ski-rental-events-contract') {
-                    sh '/usr/bin/mvn clean install -DskipTests'
+                    sh './mvnw clean package -DskipTests'
                 }
                 dir('ski-rental-contracts') {
-                    sh '/usr/bin/mvn clean install -DskipTests'
+                    sh './mvnw clean package -DskipTests'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
                     steps {
                         echo 'Сборка ski-rental...'
                         dir('ski-rental') {
-                            sh '/usr/bin/mvn clean package -DskipTests'
+                            sh './mvnw clean package -DskipTests'
                         }
                     }
                 }
@@ -35,7 +35,7 @@ pipeline {
                     steps {
                         echo 'Сборка analytics-service...'
                         dir('analytics-service') {
-                            sh '/usr/bin/mvn clean package -DskipTests'
+                            sh './mvnw clean package -DskipTests'
                         }
                     }
                 }
@@ -43,7 +43,7 @@ pipeline {
                     steps {
                         echo 'Сборка notification-service...'
                         dir('notification-service') {
-                            sh '/usr/bin/mvn clean package -DskipTests'
+                            sh './mvnw clean package -DskipTests'
                         }
                     }
                 }
@@ -51,7 +51,7 @@ pipeline {
                     steps {
                         echo 'Сборка payment-service...'
                         dir('payment-service') {
-                            sh '/usr/bin/mvn clean package -DskipTests'
+                            sh './mvnw clean package -DskipTests'
                         }
                     }
                 }
