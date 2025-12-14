@@ -66,9 +66,5 @@ pipeline {
         failure {
             echo 'Pipeline завершился с ошибкой.'
         }
-        always {
-            echo 'Архивация артефактов...'
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-        }
     }
 }
