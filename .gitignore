@@ -1,0 +1,14 @@
+target/
+out/
+*.jar
+!lib/*.jar
+.mvn/wrapper/maven-wrapper.jar
+
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,88 @@
+input SkipassInput {
+    type: String!
+    durationHours: Int
+    liftsCount: Int
+}
+
+input BookingInput {
+    userId: ID!
+    equipmentItems: [ID!]!
+    timeFrom: String!
+    timeTo: String!
+    skipass: SkipassInput!
+}
+
+input EquipmentFilterInput {
+    timeFrom: String!
+    timeTo: String!
+    type: String
+    height: Float
+    weight: Float
+    skillLevel: String
+    shoeSize: Int
+}
+
+type Skipass {
+    id: ID!
+    type: String
+    remainingLifts: Int
+    remainingHours: Int
+    active: Boolean
+}
+
+type Equipment {
+    id: ID!
+    type: String
+    model: String
+    minHeight: Float
+    maxHeight: Float
+    minWeight: Float
+    maxWeight: Float
+    shoeSize: Int
+    skillLevel: String
+    hourlyRate: Float
+}
+
+type Booking {
+    bookingId: ID!
+    userId: ID!
+    startDate: String
+    endDate: String
+    totalCost: Float
+    status: String
+    skiPass: Skipass
+    equipmentItems: [Equipment]
+}
+
+type Payment {
+    amount: Float
+    status: String
+    bookingId: ID!
+}
+
+type EquipmentPage {
+    content: [Equipment]
+    pageNumber: Int
+    pageSize: Int
+    totalElements: Int
+    totalPages: Int
+    last: Boolean
+}
+
+type Query {
+    equipment(filter: EquipmentFilterInput, page: Int = 0, size: Int = 10): EquipmentPage
+
+    bookingById(id: ID!): Booking
+    bookings: [Booking]
+
+    skipassById(id: ID!): Skipass
+}
+
+type Mutation {
+    createBooking(input: BookingInput!): Booking
+    cancelBooking(id: ID!): Booking
+
+    payBooking(bookingId: ID!): Payment
+
+    useSkipass(id: ID!): Skipass
+}

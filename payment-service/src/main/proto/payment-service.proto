@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "vvikobra.payment";
+
+service PaymentService {
+  rpc CalculateTotalPrice (BookingPriceRequest) returns (BookingPriceResponse) {}
+}
+
+message EquipmentItem {
+  string id = 1;
+  double hourly_rate = 2;
+}
+
+message BookingPriceRequest {
+  string user_id = 1;
+
+  int64 rental_hours = 2;
+
+  repeated EquipmentItem equipment = 3;
+
+  string skipass_type = 4;
+  int32 lifts_count = 5;
+
+  int64 user_previous_bookings = 6;
+}
+
+message BookingPriceResponse {
+  double final_price = 1;
+}
