@@ -72,7 +72,9 @@ services:
       - prometheus
 
   analytics-service:
-    build: ./analytics-service
+    build:
+      context: .
+      dockerfile: analytics-service/Dockerfile
     ports:
       - "8082:8082"
     environment:
@@ -89,7 +91,9 @@ services:
       - microservices-net
 
   notification-service:
-    build: ./notification-service
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
     ports:
       - "8083:8083"
     environment:
@@ -106,7 +110,9 @@ services:
       - microservices-net
 
   payment-service:
-    build: ./payment-service
+    build:
+      context: .
+      dockerfile: payment-service/Dockerfile
     ports:
       - "9090:9090"  
       - "8085:8085"
@@ -124,7 +130,9 @@ services:
       - microservices-net
 
   ski-rental:
-    build: ./ski-rental
+    build:
+      context: .
+      dockerfile: ski-rental/Dockerfile
     ports:
       - "8080:8080"
     environment:

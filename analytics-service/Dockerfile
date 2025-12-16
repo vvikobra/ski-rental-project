@@ -1,28 +1,31 @@
+FROM maven:3.9-eclipse-temurin-21-alpine AS builder
+
+WORKDIR /build
+
+COPY ski-rental-events-contract/pom.xml ./ski-rental-events-contract/
+COPY ski-rental-events-contract/src ./ski-rental-events-contract/src
+RUN cd ski-rental-events-contract && mvn clean install -DskipTests -B
+
+COPY analytics-service/pom.xml ./analytics-service/
+
+RUN cd analytics-service && mvn dependency:go-offline -B
+
+COPY analytics-service/src ./analytics-service/src
+
+RUN cd analytics-service && mvn clean package -DskipTests -B
+
 FROM eclipse-temurin:21-jre-alpine
 
-# Создаем рабочую директорию
 WORKDIR /app
 
-# Создаем пользователя 'javauser', чтобы не запускать приложение от root (Security Best Practice)
 RUN addgroup -S javauser && adduser -S javauser -G javauser
 
-# Аргумент для поиска JAR файла.
-# Мы ищем любой JAR, но исключаем *-sources.jar или *-javadoc.jar если они есть.
-# Перед сборкой еще сделайте mvn clean, в папке target будет лежать нужный нам fat-jar.
-ARG JAR_FILE=target/*.jar
+COPY --from=builder /build/analytics-service/target/*.jar app.jar
 
-# Копируем JAR внутрь образа под именем app.jar
-COPY ${JAR_FILE} app.jar
-
-# Меняем владельца файла
 RUN chown javauser:javauser /app/app.jar
 
-# Переключаемся на пользователя
 USER javauser
 
-# Документируем порт (этот порт должен совпадать с server.port в properties)
 EXPOSE 8082
 
-# Запускаем приложение
-# Использование exec формы ["..."] позволяет корректно передавать сигналы остановки (SIGTERM)
 ENTRYPOINT ["java", "-jar", "app.jar"]
